@@ -54,7 +54,7 @@ public class MemberInsertController extends HttpServlet {
 		// ["운동", "등산"] --> "운동,등산"
 		
 		String interest = "";
-		if(interest != null) {
+		if(interestArr != null) {
 			interest = String.join(",",interestArr);
 		}
 		
