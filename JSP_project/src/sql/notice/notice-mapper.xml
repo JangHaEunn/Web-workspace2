@@ -51,16 +51,19 @@
 	</entry>
 	
 	<entry key="selectNoticeNo">
-		SELECT SEQ_NNO.CURRENTVAL AS NOTICE_NO FROM DUAL
+		SELECT SEQ_NNO.CURRVAL AS NOTICE_NO FROM DUAL
 	</entry>
 	
 	<entry key = "updateNotice">
 		UPDATE NOTICE 
 		SET NOTICE_TITLE = ?,
-			NOTICE_CONTENT = ?, 
-			MODIFY_DATE = SYSDATE
+			NOTICE_CONTENT = ?
 		WHERE NOTICE_NO = ? 	
-			
-		
+	</entry>
+	
+	<entry key="deleteNotice">
+		UPDATE NOTICE
+		SET STATUS = 'N'
+		WHERE NOTICE NO = ?
 	</entry>
 </properties>
