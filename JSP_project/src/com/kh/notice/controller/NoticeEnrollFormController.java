@@ -1,4 +1,4 @@
-package com.kh.member.controller;
+package com.kh.notice.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class LogoutController
+ * Servlet implementation class NoticeEnrollFormController
  */
-@WebServlet("/logout.me")
-public class LogoutController extends HttpServlet {
+@WebServlet("/enrollForm.no")
+public class NoticeEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutController() {
+    public NoticeEnrollFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,17 +26,7 @@ public class LogoutController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// 로그아웃 요청 처리 => 연동되어있던 loginUser 세선정보를 만료시키기(세션 무효화)
-		request.getSession().removeAttribute("loginUser");
-		//request.getSession().invalidate(); // 세션영역에 있는 데이터를 모두 날리는 함수 
-		
-		// 응답페이지 => /jspproject 
-		// url 재요청방식 
-		
-		response.sendRedirect(request.getContextPath()); // jspproject 
-		
-		
+		request.getRequestDispatcher("views/notice/noticeEnrollForm.jsp").forward(request, response);
 	}
 
 	/**

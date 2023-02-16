@@ -1,4 +1,4 @@
-package com.kh.member.controller;
+package com.kh.notice.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.notice.model.service.NoticeService;
+import com.kh.notice.model.vo.Notice;
+
 /**
- * Servlet implementation class LogoutController
+ * Servlet implementation class NoticeUpdateFormController
  */
-@WebServlet("/logout.me")
-public class LogoutController extends HttpServlet {
+@WebServlet("/updateForm.no")
+public class NoticeUpdateFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutController() {
+    public NoticeUpdateFormController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,14 +30,18 @@ public class LogoutController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 로그아웃 요청 처리 => 연동되어있던 loginUser 세선정보를 만료시키기(세션 무효화)
-		request.getSession().removeAttribute("loginUser");
-		//request.getSession().invalidate(); // 세션영역에 있는 데이터를 모두 날리는 함수 
+		int nno = Integer.parseInt(request.getParameter("nno"));
+	
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		
-		// 응답페이지 => /jspproject 
-		// url 재요청방식 
+		Notice n = new NoticeService().selectNotice(nno);
 		
-		response.sendRedirect(request.getContextPath()); // jspproject 
+		int result = new NoticeService().updateNotice(nno, title,content);
+		
+		request.setAttribute("n", n);
+		request.getRequestDispatcher("views/notice/noticeUpdateForm.jsp").forward(request, response); // 데이터를 담아서 보내줄때는 requestDispatcher를 이용 
+		
 		
 		
 	}

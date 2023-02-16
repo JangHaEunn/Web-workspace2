@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.notice.model.service.NoticeService;
 import com.kh.notice.model.vo.Notice;
 
+
+
+
+
 /**
  * Servlet implementation class NoticeListController
  */
@@ -35,7 +39,7 @@ public class NoticeListController extends HttpServlet {
 		// 1) 공지사항 전체 리스트 조회 한 후
 		ArrayList<Notice> list = new NoticeService().selectNoticeList();
 		// SELECT * FROM NOTICE WHERE STATUS = 'Y'
-		System.out.println(list);
+		//System.out.println(list);
 
 		// 2) 조회 결과를 담아서 응답페이지로 포워딩 
 		request.setAttribute("list", list);
