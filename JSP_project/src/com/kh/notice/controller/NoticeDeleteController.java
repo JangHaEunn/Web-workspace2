@@ -36,11 +36,10 @@ public class NoticeDeleteController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		if(result>0) {
-			session.setAttribute("alertMsg", "삭제했습니다");
-			session.removeAttribute("list");
+			session.setAttribute("alertMsg", "성공적으로 공지사항이 삭제되었습니다");
 			response.sendRedirect(request.getContextPath()+"/list.no");
 		}else {
-			request.setAttribute("errorMsg", "삭제에 실패했습니다");
+			request.setAttribute("errorMsg", "공지사항 삭제 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response); 
 		}
 	
