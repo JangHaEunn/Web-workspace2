@@ -39,7 +39,7 @@
 		<!-- 글등록버튼(로그인한 회원만 보이도록) -->
 		<%if(loginUser != null) {%>
 			<div align ="right" style="width:850px">
-				<a href="<%=contextPath %>/enrollForm.bo" class="btn btn-secondary">글작성</a>
+				<a href="<%=contextPath %>/insert.bo" class="btn btn-secondary">글작성</a>
 				<br><br>
 			</div>
 		<%} %>
@@ -62,7 +62,7 @@
 				</tr>
 			<%} else { %>
 				<% for(Board b : list) {%>
-					<tr>
+					<tr onclick="moveBoard(<%=b.getBoardNo() %>)">
 						<td><%=b.getBoardNo() %></td>
 						<td><%=b.getCategory() %></td>
 						<td><%=b.getBoardTitle() %></td>
@@ -75,6 +75,7 @@
 				
 			</tbody>
 		</table>
+		
 			<br><br>
 			
 			<!-- 페이징바 영역 -->
@@ -110,6 +111,11 @@
 			
 			</div>
 	
+	<script>
+		function moveBoard(bno){
+			location.href = "<%=contextPath %>/detail.bo?bno="+bno;
+		}
+	</script>
 	</div>
 	
 	
