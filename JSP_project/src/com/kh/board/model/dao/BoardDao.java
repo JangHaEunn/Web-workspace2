@@ -210,10 +210,10 @@ public class BoardDao {
 			
 			if(rset.next()) {
 				b = new Board(rset.getInt("BOARD_NO"),
-						rset.getString("CATEGORY"),
+						rset.getString("CATEGORY_NAME"),
 						rset.getString("BOARD_TITLE"),
 						rset.getString("BOARD_CONTENT"),
-						rset.getString("BOARD_WRITER"),
+						rset.getString("USER_ID"),
 						rset.getDate("CREATE_DATE"));
 				
 			}
