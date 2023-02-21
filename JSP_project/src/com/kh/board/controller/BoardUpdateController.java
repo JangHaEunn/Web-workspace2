@@ -76,24 +76,27 @@ public class BoardUpdateController extends HttpServlet {
 				String category = multi.getParameter("category"); 
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
-				int originFileNo = Integer.parseInt(multi.getParameter("originFileNo"));
-				String changeFileName = multi.getParameter("changeFileName");
+				
 			
 				// 새롭게 전달된 첨부파일이 있는 경우에만 at변수에 필요한 값을 추가할것 
 				Attachment at = null;
 				if(multi.getOriginalFileName("upfile") != null) {
 					at = new Attachment();
 					at.setOriginName(multi.getOriginalFileName("upfiles"));
-					at.setChangeName(changeFileName);
+					at.setChangeName(multi.getFilesystemName("upfiles"));
 					at.setFilePath("resources/board_upfiles/");
 					
 					// 첨부파일이 원래 등록되어 있을경우 원본파일의 파일번호, 수정된 이름을 hidden 넘겨받았음
 					if(multi.getParameter("originFileNo") != null ) {
+						int originFileNo = Integer.parseInt(multi.getParameter("originFileNo"));
+						String changeFileName = multi.getParameter("changeFileName");
 						// 기존에 파일이 있었던 경우 
 						// Attachment 테이블의 정보를 update
+						at.setOriginName(changeFileName);
+						at.setChangeName(changeFileName);
 					
 						// 기존의 파일번호를 저장시키기 
-						at.setFileNo(Integer.parseInt(multi.getParameter("originFileNo")));
+						at.setFileNo(originFileNo);
 						
 						// 기존의 첨부파일을 삭제 
 						new File(path+multi.getParameter("changeFileName")).delete();
@@ -103,9 +106,7 @@ public class BoardUpdateController extends HttpServlet {
 						
 						// REF_BNO에 현재 게시글 번호를 추가시켜줌. 
 						at.setRefBno(Integer.parseInt(multi.getParameter("bno")));
-					
-						
-						
+
 						
 					}
 				}
@@ -115,6 +116,7 @@ public class BoardUpdateController extends HttpServlet {
 				b.setBoardContent(content);
 				b.setCategory(category);
 				b.setBoardNo(bno);
+				
 				
 				int result = new BoardService().updateBoard(b, at);
 				// 하나의 트랜잭션으로 board에 update문과 Attachment 테이블의 insert, update 동시에 처리해주기 

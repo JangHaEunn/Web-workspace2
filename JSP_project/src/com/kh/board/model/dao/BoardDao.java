@@ -295,7 +295,7 @@ public class BoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(1,at.getChangeName());
 			pstmt.setString(2,at.getChangeName());
 			pstmt.setString(3, at.getFilePath());
 			pstmt.setInt(4, at.getFileNo());
@@ -327,6 +327,30 @@ public class BoardDao {
 			pstmt.setString(2, b.getBoardContent());
 			pstmt.setString(3, b.getCategory());
 			pstmt.setInt(4, b.getBoardNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int reInsertAttachment(Connection conn, Attachment at, int bno) {
+int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("reInsertAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bno);
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {

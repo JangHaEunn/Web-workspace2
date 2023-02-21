@@ -122,9 +122,14 @@ public class BoardService {
 		
 		int result2 = 1;
 		
-		if(at != null) {
-			result2 = new BoardDao().updateAttachment(conn, at); 
+		if(at!=null) {
+			if(at.getOriginName() != null) {
+				result2 = new BoardDao().updateAttachment(conn, at); 
+			}else {
+				result2 = new BoardDao().reInsertAttachment(conn, at, b.getBoardNo());
+			}
 		}
+	
 		
 		if(result1>0 && result2>0) {
 			commit(conn);

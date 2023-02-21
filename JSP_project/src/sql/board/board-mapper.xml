@@ -48,7 +48,7 @@
 	
 		<entry key="reInsertAttachment">
 		INSERT INTO ATTACHMENT(FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
-		VALUES(SEQ_FNO.NEXTVAL, BOARD_NO, ?,?,?)	
+		VALUES(SEQ_FNO.NEXTVAL, ?, ?,?,?)	
 	</entry>
 
 	<entry key="selectBoard">
