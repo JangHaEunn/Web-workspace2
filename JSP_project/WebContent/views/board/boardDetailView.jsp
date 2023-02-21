@@ -1,5 +1,4 @@
-<%@page import="com.kh.board.model.vo.Attachment"%>
-<%@page import="com.kh.board.model.vo.Board"%>
+<%@page import="com.kh.board.model.vo.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -48,9 +47,14 @@
 			<tr>
 				<th>첨부파일</th>
 				<td colspan="3">
-					첨부파일이 없을 경우 : 첨부파일이 없습니다로 표시 
-					첨부파일이 있을 경우 : 
-					<a download=<%=at.getOriginName() %> href="resources/board_upfiles"><%=at.getOriginName() %></a>
+				
+					<%if (at != null) {%>
+						<!-- href = '/jspproject/resources/board_upfiles/2022xxxx.jpg' -->
+						<a download=<%=at.getOriginName() %> href="<%=contextPath%>/<%=at.getFilePath()+at.getChangeName()%>"><%=at.getOriginName() %></a>
+					<%} else{ %>
+						첨부파일이 없습니다
+					<% } %>
+					
 				</td>
 			</tr>
 		</table>
@@ -61,10 +65,10 @@
 			<a href="<%=contextPath %>/list.bo?currentPage=1" class="btn btn-secondary btn-sm">목록가기</a>
 			
 			<!-- 로그인한 사용자가 해당 게시글의 작성자인 경우 -->
-	<%-- 		<%if(loginUser != null && loginUser.getUserId().equals(b.getBoardWriter())){ %>
-				<a href="<%=contextPath %>/updateForm.bo?bno=<%=b.getBoardNo() %>" class="btn btn-warning btn-sm">수정하기</a>
+			<%if(loginUser != null && loginUser.getUserId().equals(b.getBoardWriter())){ %>
+				<a href="<%=contextPath %>/update.bo?bno=<%=b.getBoardNo() %>" class="btn btn-warning btn-sm">수정하기</a>
 				<a href="<%= contextPath %>/delete.bo?bno=<%=b.getBoardNo() %>" class="btn btn-danger btn-sm">삭제하기</a>
-			<%} %> --%>
+			<%} %> 
 		</div>
 		
 		<br>

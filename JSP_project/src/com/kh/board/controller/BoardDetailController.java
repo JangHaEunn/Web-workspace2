@@ -32,16 +32,20 @@ public class BoardDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		
-		int result = new BoardService().increaseCount(bno);
+		BoardService bService = new BoardService();
 		
-		if(result > 0) {
-			Board b = new BoardService().selectBoard(bno);
-			Attachment at = new Attachment();
+		// 조회수 증가 / 게시글 조회 (Board) / 첨부파일 조회 (Attachment)
+		
+		int result = bService.increaseCount(bno);
+		
+		if(result > 0) { // 유효한 게시글일때 => 게시글정보, 첨부파일을 조회해서 request영역안에 담은후에 상세페이지로 포워딩 
+			Board b = bService.selectBoard(bno);
+			Attachment at = bService.selectAttachment(bno);
 			request.setAttribute("at", at);
 			request.setAttribute("b", b);
 			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
 		}else {
-			request.setAttribute("errorMsg", "조회 실패");
+			request.setAttribute("errorMsg", "게시글 상세조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}

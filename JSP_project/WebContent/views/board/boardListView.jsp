@@ -62,7 +62,7 @@
 				</tr>
 			<%} else { %>
 				<% for(Board b : list) {%>
-					<tr onclick="moveBoard(<%=b.getBoardNo() %>)">
+					<tr>
 						<td><%=b.getBoardNo() %></td>
 						<td><%=b.getCategory() %></td>
 						<td><%=b.getBoardTitle() %></td>
@@ -75,6 +75,22 @@
 				
 			</tbody>
 		</table>
+		
+			<script>
+		$(function(){
+			$(".list-area>tbody>tr").click(function(){
+				// 클릭시 해당 공지사항의 글번호를 알아야함
+				// tr요소의 자손중에서 첫번째 td태그의 영역안의 내용을 가져올 예정
+				
+				let bno = $(this).children().eq(0).text();
+				// 현재 내가 클릭한 tr의 자손들 중 0번째에 위치한 자식의 textNode값을 가져온다. 
+				
+				// 요청할 url?키=밸류&키=밸류
+				// 물음표 뒤의 내용을 쿼리스트링이라고 부름 => 직접 만들어서 넘겨줘야한다. 
+				location.href = "<%=contextPath %>/detail.bo?bno="+bno;
+			});
+		});
+	</script>
 		
 			<br><br>
 			
@@ -111,11 +127,7 @@
 			
 			</div>
 	
-	<script>
-		function moveBoard(bno){
-			location.href = "<%=contextPath %>/detail.bo?bno="+bno;
-		}
-	</script>
+
 	</div>
 	
 	

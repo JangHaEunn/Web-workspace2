@@ -198,7 +198,7 @@ public class BoardDao {
 	
 	public Board selectBoard(Connection conn, int bno) {
 		
-		Board b = null;
+		Board b= null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectBoard");
@@ -209,12 +209,12 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				b = new Board(rset.getInt("BOARD_NO"),
-						rset.getString("CATEGORY_NAME"),
-						rset.getString("BOARD_TITLE"),
-						rset.getString("BOARD_CONTENT"),
-						rset.getString("USER_ID"),
-						rset.getDate("CREATE_DATE"));
+				 b = new Board(rset.getInt("BOARD_NO"),
+							  rset.getString("CATEGORY_NAME"),
+							  rset.getString("BOARD_TITLE"),
+							  rset.getString("BOARD_CONTENT"),
+							  rset.getString("USER_ID"),
+							  rset.getDate("CREATE_DATE"));
 				
 			}
 		} catch (SQLException e) {
@@ -226,6 +226,42 @@ public class BoardDao {
 		return b;
 		
 		
+	}
+	
+	public Attachment selectAttachment(Connection conn, int bno) {
+		
+		Attachment at = null;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				at = new Attachment();
+				at.setFileNo(rset.getInt("FILE_NO"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+				at.setFileLevel(rset.getInt("FILE_LEVEL"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return at;
+		
+		
+	
 	}
 	
 	public int increaseCount(Connection conn, int bno) {
@@ -245,8 +281,59 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
-		
+
+	}
 	
+	public int updateAttachment(Connection conn, Attachment at) {
 		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2,at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			pstmt.setInt(4, at.getFileNo());
+			
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	public int updateBoard(Connection conn, Board b) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, b.getBoardTitle() );
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setString(3, b.getCategory());
+			pstmt.setInt(4, b.getBoardNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }

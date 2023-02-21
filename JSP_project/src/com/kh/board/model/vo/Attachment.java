@@ -37,6 +37,10 @@ public class Attachment {
 		this.fileLevel = fileLevel;
 		this.status = status;
 	}
+	
+	
+
+
 
 	public int getFileNo() {
 		return fileNo;
