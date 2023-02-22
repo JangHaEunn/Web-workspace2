@@ -77,26 +77,29 @@ public class BoardUpdateController extends HttpServlet {
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
 				
+				Board b = new Board();
+				b.setBoardTitle(title);
+				b.setBoardContent(content);
+				b.setCategory(category);
+				b.setBoardNo(bno);
 			
 				// 새롭게 전달된 첨부파일이 있는 경우에만 at변수에 필요한 값을 추가할것 
 				Attachment at = null;
 				if(multi.getOriginalFileName("upfile") != null) {
 					at = new Attachment();
-					at.setOriginName(multi.getOriginalFileName("upfiles"));
-					at.setChangeName(multi.getFilesystemName("upfiles"));
+					at.setOriginName(multi.getOriginalFileName("upfile"));
+					at.setChangeName(multi.getFilesystemName("upfile"));
 					at.setFilePath("resources/board_upfiles/");
 					
 					// 첨부파일이 원래 등록되어 있을경우 원본파일의 파일번호, 수정된 이름을 hidden 넘겨받았음
 					if(multi.getParameter("originFileNo") != null ) {
-						int originFileNo = Integer.parseInt(multi.getParameter("originFileNo"));
-						String changeFileName = multi.getParameter("changeFileName");
+					
 						// 기존에 파일이 있었던 경우 
 						// Attachment 테이블의 정보를 update
-						at.setOriginName(changeFileName);
-						at.setChangeName(changeFileName);
+				
 					
 						// 기존의 파일번호를 저장시키기 
-						at.setFileNo(originFileNo);
+						at.setFileNo(Integer.parseInt(multi.getParameter("originFileNo")));
 						
 						// 기존의 첨부파일을 삭제 
 						new File(path+multi.getParameter("changeFileName")).delete();
@@ -111,11 +114,6 @@ public class BoardUpdateController extends HttpServlet {
 					}
 				}
 				
-				Board b = new Board();
-				b.setBoardTitle(title);
-				b.setBoardContent(content);
-				b.setCategory(category);
-				b.setBoardNo(bno);
 				
 				
 				int result = new BoardService().updateBoard(b, at);
@@ -129,10 +127,10 @@ public class BoardUpdateController extends HttpServlet {
 				// 성공시 : 상세조회페이지로 redirect
 				// 실패시 : 에러페이지로 포워딩 
 				if(result>0) {
-					request.getSession().setAttribute("alertMsg", "성공");
+					request.getSession().setAttribute("alertMsg", "성공적으로 수정되었습니다");
 					response.sendRedirect(request.getContextPath()+"/detail.bo?bno="+bno);
 				}else {
-					request.setAttribute("errorMsg", " 실패");
+					request.setAttribute("errorMsg", "게시글 수정에 실패했습니다");
 					request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 				}
 				
