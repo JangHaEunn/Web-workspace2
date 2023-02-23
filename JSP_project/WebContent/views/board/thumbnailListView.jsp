@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 <style>
 	.outer{
-		height : 800px;
+		min-height : 800px;
 	}
 	.list-area{
 		width : 760px;
@@ -35,34 +35,18 @@
 		<%} %>
 		
 		<div class="list-area">
-			
-			<div class="thumbnail" align = "center">
-				<input type="hidden" value="1">
-				<img src="<%=contextPath %>/resources/thumb_upfiles/animal1.gif" width="200px" height="150px">
-				<p>
-					NO.1 첫번째글제목<br>
-					조회수 : 1 
-				</p>
-			</div>
-			
+			<% int count = 1; %>
+			<% for( Board b : list) {%>
 				<div class="thumbnail" align = "center">
-				<input type="hidden" value="2">
-				<img src="<%=contextPath %>/resources/thumb_upfiles/animal2.gif" width="200px" height="150px">
-				<p>
-					NO.2 두번째글제목<br>
-					조회수 : 1 
-				</p>
-			</div>
-			
-				<div class="thumbnail" align = "center">
-				<input type="hidden" value="3">
-				<img src="<%=contextPath %>/resources/thumb_upfiles/animal3.gif" width="200px" height="150px">
-				<p>
-					NO.3 세번째글제목<br>
-					조회수 : 1 
-				</p>
-			</div>
-			
+					<input type="hidden" value="<%=b.getBoardNo() %>">
+					<img src="<%=contextPath %><%=b.getTitleImg() %> " width="200px" height="150px"><br>
+					<p>
+						NO.<%=count++ %> <%=b.getBoardTitle() %><br>
+						조회수 : <%=b.getCount() %>
+					</p>
+				</div>
+				
+			<%} %>
 		</div>
 	</div>
 	
