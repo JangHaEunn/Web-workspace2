@@ -449,6 +449,12 @@
 	<input type="file" id="upfile" multiple>
 	<button onclick="sendFile();">파일전송</button>
 	
+	
+
+	
+	
+	
+	
 	<script>
 		function sendFile(){
 			// 파일 전송시에는 FormData라는 객체를 생성해서 파일을 추가시켜줘야함 
@@ -473,6 +479,10 @@
 				}
 			}); 
 		}
+		
+		
+		
+		
 	</script>
 	
 </body>
