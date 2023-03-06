@@ -2,6 +2,7 @@ package com.kh.member.model.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.kh.common.JDBCTemplate;
 import com.kh.member.model.dao.MemberDao;
@@ -127,6 +128,15 @@ public class MemberService {
 		JDBCTemplate.close(conn);
 		return result;
 	}
+	
+	public int idCheck(String userId){
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int count = new MemberDao().idCheck(conn, userId);
 
+		JDBCTemplate.close(conn);
+		
+		return count;
+	}
 
 }

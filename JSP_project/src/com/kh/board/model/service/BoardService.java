@@ -9,6 +9,7 @@ import com.kh.board.model.dao.BoardDao;
 import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
 import com.kh.board.model.vo.Category;
+import com.kh.board.model.vo.Reply;
 import com.kh.common.model.vo.PageInfo;
 
 
@@ -204,5 +205,33 @@ public class BoardService {
 		return list; 
 		
 		
+	}
+	
+	public int insertReply(String content, int bno, int writer) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().insertReply(conn, content, bno, writer);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+		
+	}
+	
+	public ArrayList<Reply> selectReplyList (int bno){
+		Connection conn = getConnection();
+		
+		ArrayList<Reply> list = new BoardDao().selectReplyList(conn, bno);
+		
+		close(conn);
+		
+		return list; 
 	}
 }

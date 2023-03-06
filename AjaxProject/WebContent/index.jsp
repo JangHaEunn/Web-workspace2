@@ -109,6 +109,7 @@
 			// 전송방식도 수정해줘야함. 
 			xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 			xhr.send("id=user01");
+			//xhr.send("id=user01&pwd=11"); 전달해야할 매개변수가 두개이상일 경우 
 		}
 	
 	</script>
@@ -331,7 +332,7 @@
 		<option value="4">작성자</option>
 	</select>
 	<br>
-	<input id="keyword"  type="text" placeholder="찾을 게시글을 작성하세요">
+	<input id="keyword"  type="text" placeholder="찾을 게시글을 작성하세요" autocomplete="off">
 	<br>
 	<select id="list">
 		

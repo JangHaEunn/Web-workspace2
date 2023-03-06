@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
  <%  Board b =(Board) request.getAttribute("b");
  	 Attachment at = (Attachment)request.getAttribute("at");
+ 	 ArrayList<Reply> list = (ArrayList<Reply>)request.getAttribute("list");
     %>
 <!DOCTYPE html>
 <html>
@@ -107,33 +108,80 @@
 					<% } %>
 				</thead>
 				<tbody>
-					<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
-									<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
-									<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
-									<tr>
-						<td>user01</td>
-						<td>테스트 댓글</td>
-						<td>2023-02-20</td>
-					</tr>
-					
+				<% if(list.isEmpty()) {%>
+				<tr>
+					<td colspan="6">조회된 리스트가 없습니다..</td>
+				</tr>
+			<%} else { %>
+					<%for(Reply r :list) { %>
+						<tr>
+							<td><%=r.getReplyWriter() %></td>
+							<td>
+								<%=r.getReplyContent() %>
+							</td>
+							<td><%=r.getCreateDate() %></td>
+						</tr>
+					<%} %>
+				<%} %>
 				</tbody>
 			</table>
 		</div>
 		
 	</div>
-
+	
+	<script>
+		function insertReply(){
+			$.ajax({
+				url : "<%=contextPath%>/rinsert.bo",
+				data : {
+					content : $("#replyContent").val(), 
+					bno     : "<%=b.getBoardNo()%>"
+				},
+				success : function(result){
+					console.log(result);
+					// 댓글등록 성공시 result = 1
+					
+					// 댓글등록 실패시 result = 0 
+					if(result > 0){
+						// 새 댓글목록 불러오는 함수 호출
+						selectReplyList();
+						// 댓글내용 비워두기 
+						
+						
+					}else{
+						alert("댓글작성에 실패했습니다");
+					}
+				}, 
+				error : function(){
+					console.log("댓글 작성 실패")
+				} 
+			})
+		}
+		
+		function selectReplyList(){
+			$.ajax({
+				url : "<%=contextPath%>/rlist.bo",
+				data : { bno : "<%=b.getBoardNo()%>"},
+				success : function(list){
+					 console.log(list);
+					// 서버로부터 전달받은 리스트를 반복문을 통해 댓글목록으로 변환 
+					let result = "";
+					for(let i = 0; i<list.length; i++){
+					result  += 
+								"<tr><td>" + list[i].replyWriter +"</td>"
+								+"<td>" + list[i].replyContent +"</td>"
+								+"<td>" + list[i].createDate+"</td></tr>";
+					
+						
+					}
+					$("#reply-area tbody").html(result);
+				},
+				error: function(){
+					console.log("게시글 목록조회 실패")
+				}
+			});
+		}
+	</script>
 
 
 
