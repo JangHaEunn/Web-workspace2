@@ -108,7 +108,20 @@
 					<% } %>
 				</thead>
 				<tbody>
-			
+			 		<%if(list.isEmpty()) {%>
+			 			<tr>
+			 				<td>없습니다</td>
+			 			</tr>
+			 		<%}else{ %>
+			 			<%for(Reply r : list){ %>
+			 			<tr>
+			 				<td><%=r.getReplyWriter() %></td>
+			 				<td><%=r.getReplyContent() %></td>
+			 				<td><%=r.getCreateDate() %></td>
+			 			</tr>
+			 			<%} %>
+			 			
+			 		<%} %>
 				</tbody>
 			</table>
 		</div>

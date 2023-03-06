@@ -1,6 +1,8 @@
 package com.kh.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.board.model.service.BoardService;
 import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
+import com.kh.board.model.vo.Reply;
 
 /**
  * Servlet implementation class BoardDetailController
@@ -34,6 +37,7 @@ public class BoardDetailController extends HttpServlet {
 		
 		BoardService bService = new BoardService();
 		
+		
 		// 조회수 증가 / 게시글 조회 (Board) / 첨부파일 조회 (Attachment)
 		
 		int result = bService.increaseCount(bno);
@@ -41,6 +45,8 @@ public class BoardDetailController extends HttpServlet {
 		if(result > 0) { // 유효한 게시글일때 => 게시글정보, 첨부파일을 조회해서 request영역안에 담은후에 상세페이지로 포워딩 
 			Board b = bService.selectBoard(bno);
 			Attachment at = bService.selectAttachment(bno);
+			ArrayList<Reply> list = new BoardService().selectReplyList(bno);
+			request.setAttribute("list", list);
 			request.setAttribute("at", at);
 			request.setAttribute("b", b);
 			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
