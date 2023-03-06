@@ -108,21 +108,7 @@
 					<% } %>
 				</thead>
 				<tbody>
-				<% if(list.isEmpty()) {%>
-				<tr>
-					<td colspan="6">조회된 리스트가 없습니다..</td>
-				</tr>
-			<%} else { %>
-					<%for(Reply r :list) { %>
-						<tr>
-							<td><%=r.getReplyWriter() %></td>
-							<td>
-								<%=r.getReplyContent() %>
-							</td>
-							<td><%=r.getCreateDate() %></td>
-						</tr>
-					<%} %>
-				<%} %>
+			
 				</tbody>
 			</table>
 		</div>
@@ -146,7 +132,7 @@
 						// 새 댓글목록 불러오는 함수 호출
 						selectReplyList();
 						// 댓글내용 비워두기 
-						
+						$("#replyContent").val("");
 						
 					}else{
 						alert("댓글작성에 실패했습니다");
@@ -166,11 +152,11 @@
 					 console.log(list);
 					// 서버로부터 전달받은 리스트를 반복문을 통해 댓글목록으로 변환 
 					let result = "";
-					for(let i = 0; i<list.length; i++){
+					for(let i of list){
 					result  += 
-								"<tr><td>" + list[i].replyWriter +"</td>"
-								+"<td>" + list[i].replyContent +"</td>"
-								+"<td>" + list[i].createDate+"</td></tr>";
+								"<tr><td>" + i.replyWriter +"</td>"
+								+"<td>" + i.replyContent +"</td>"
+								+"<td>" + i.createDate+"</td></tr>";
 					
 						
 					}
