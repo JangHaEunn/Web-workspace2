@@ -110,7 +110,7 @@
 				<tbody>
 			 		<%if(list.isEmpty()) {%>
 			 			<tr>
-			 				<td>없습니다</td>
+			 				<td colspan="3" align="center">조회된 댓글이 없습니다</td>
 			 			</tr>
 			 		<%}else{ %>
 			 			<%for(Reply r : list){ %>
@@ -129,6 +129,10 @@
 	</div>
 	
 	<script>
+		$(function(){
+			setInterval(selectReplyList, 1000); 
+		});
+	
 		function insertReply(){
 			$.ajax({
 				url : "<%=contextPath%>/rinsert.bo",
