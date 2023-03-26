@@ -35,6 +35,40 @@ public class BoardDao {
 		}
 	}
 	
+	
+	public ArrayList<Attachment> selectAlbumList(Connection conn){
+		
+		ArrayList<Attachment> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		
+		String sql = prop.getProperty("selectAlbumList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+						
+				list.add(at);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
 	public int selectListCount(Connection conn) {
 		int listCount = 0; 
 		
@@ -481,7 +515,8 @@ public class BoardDao {
 				Board b = new Board();
 				b.setBoardNo(rset.getInt("BOARD_NO"));
 				b.setBoardTitle(rset.getString("BOARD_TITLE"));
-				b.setCount(rset.getInt("COUNT"));
+//				b.setCount(rset.getInt("COUNT"));
+				b.setCreateDate(rset.getDate("CREATE_DATE"));
 				b.setTitleImg(rset.getString("TITLEIMG"));
 				
 				list.add(b);

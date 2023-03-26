@@ -15,6 +15,16 @@ import com.kh.common.model.vo.PageInfo;
 
 public class BoardService {
 	
+	public ArrayList<Attachment> selectAlbumList(){
+	Connection conn = getConnection();
+		
+		ArrayList<Attachment> list = new BoardDao().selectAlbumList(conn);
+		
+		close(conn);
+		
+		return list;
+	}
+	
 	public int selectListCount() {
 		Connection conn = getConnection();
 		

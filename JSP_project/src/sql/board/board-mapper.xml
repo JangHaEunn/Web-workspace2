@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+	<entry key="selectAlbumList">
+		SELECT FILE_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, NVL(FILE_LEVEL, 0) AS FILE_LEVEL
+		FROM ATTACHMENT
+		ORDER BY UPLOAD_DATE
+	</entry>
 	<entry key="selectListCount">
 		SELECT COUNT(*) AS COUNT
 		FROM BOARD
@@ -124,7 +129,7 @@
 	</entry>
 	
 	<entry key="selectThumbnailList">
-		SELECT BOARD_NO, BOARD_TITLE,COUNT, FILE_PATH || CHANGE_NAME AS TITLEIMG
+		SELECT BOARD_NO, BOARD_TITLE, CREATE_DATE, FILE_PATH || CHANGE_NAME AS TITLEIMG
 		FROM BOARD B
         JOIN ATTACHMENT ON(BOARD_NO = REF_BNO)
 		WHERE BOARD_TYPE = 2 

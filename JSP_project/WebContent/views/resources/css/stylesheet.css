@@ -1,0 +1,127 @@
+/* CSS영역 (스타일정보 바로 기입) */
+
+/* 1. 속성 선택자 ------------------------------------------- */
+
+/* div중 name 속성값이 name1과 "일치"하는 요소 */
+
+div[name=name1] {
+    background-color: tan;
+}
+
+/* div 중 name속성값에 name1이 "포함" 되어있는 요소(단어로써) */
+div[name~=name1] {
+    background-color: aqua;
+}
+
+/* div중 class 속성값이 div로 "시작" 하는 요소 (-앞에 한 단어로써)*/
+
+/* div중 name속성값이 na로 "시작"되는 요소*/
+div[name^=na]{
+    color: blue;
+}
+
+/* div중 class속성값이 ss로 "끝"나는 요소 */
+div[class$=ss]{
+    color: brown;
+}
+ 
+/* div중 class속성값에 i가 "포함" 되어있는 요소*/
+div[class*=i]{
+    background-color: forestgreen;
+    color: violet;
+}
+
+/* 
+class 속성값이 div-class인 애들 중 name 속성값에 name3가 단어로써 포함되어 있는 요소를 선택한 후 
+배경색을 핑크색으로 바꾸시오.
+*/
+
+.div-class[name~=name3]{
+    background-color: pink;
+}
+
+/*
+    2. 자손, 후손 선택자 ----------------------
+
+*/
+/* a>b : a요소의 자손들 중 b요소만 선택*/
+
+#test1>h4{
+    background-color: aquamarine;
+}
+
+#test1>ul>li{
+    background-color: tomato;
+}
+
+/* a b : a요소의 후손(모든 하위요소)들 중 b요소만을 선택하는 선택자 */
+#test1 li{
+    color: wheat;
+    background-color: yellow;
+}
+
+#test1 h4{
+    color:darkgoldenrod
+}
+
+/* 3. 동위선택자 ----------------------------------------*/
+/* a+b :a 요소 바로 뒤에 b 요소 하나만을 선택 */
+
+#test2+div{
+    background-color: azure;
+}
+#test2+ul{
+    background-color: yellowgreen;
+    /* 바로 뒤에 있는 요소가 아니기 때문에 반영되지 않음 */
+}
+/* a~b : a 요소 뒤에 있는 모든 b요소 다 선택*/
+#test2~div{
+    /*background-color: beige;*/
+}
+#test2~ul{
+   /* background-color: wheat; */
+}
+
+/* 4. 반응 선택자 -----------------------------------------------*/
+.area{
+    background-color: beige;
+    width: 100px;
+    height: 100px;
+}
+#active-test{
+    cursor: pointer;
+}
+
+#active-test:active {
+    background-color: aquamarine;
+    color: blueviolet;
+}
+
+#hover-test:hover {
+    cursor: pointer;
+    background-color: blue;
+    color: aliceblue
+}
+
+/* 5. 상태 선택자 */
+/* 기본적으로 해당 선택된 요소 자체에 스타일을 반영 */
+input[type=checkbox]:checked {
+    width: 20px;
+    height: 20px;
+}
+input[type=checkbox]:checked+label{ /* 동위 레벨 */
+    font-size: 20px;
+}
+
+/* input 요소 중 name 속성의 값이 user로 시작하는 요소를 선택한 후 focus 상태일때만 스타일 부여 */
+input[name^=user]:focus{
+    background-color: violet;
+}
+
+button:enabled{
+    background-color: firebrick;
+}
+
+button:disabled{
+    background-color: aquamarine;
+}

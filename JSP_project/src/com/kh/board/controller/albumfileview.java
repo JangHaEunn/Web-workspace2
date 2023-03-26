@@ -14,16 +14,16 @@ import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
 
 /**
- * Servlet implementation class ThumbnailListController
+ * Servlet implementation class albumfileview
  */
-@WebServlet("/list.th")
-public class ThumbnailListController extends HttpServlet {
+@WebServlet("/al.do")
+public class albumfileview extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ThumbnailListController() {
+    public albumfileview() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,13 +32,17 @@ public class ThumbnailListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 	
-		ArrayList<Board> list = new BoardService().selectThumbnailList();
+			ArrayList<Attachment> list = new BoardService().selectAlbumList();
+			request.setAttribute("list", list);
+			request.getRequestDispatcher("views/board/albumFileView.jsp").forward(request, response);
+			
 		
 		
-		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("views/board/albumList.jsp").forward(request, response);
+	
+	
 	}
 
 	/**
